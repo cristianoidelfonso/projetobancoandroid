@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import java.util.List;
-
 import br.ufpe.cin.residencia.banco.R;
 //ESTA CLASSE NAO PRECISA SER MODIFICADA!
 public class ContaAdapter extends ListAdapter<Conta, ContaViewHolder> {

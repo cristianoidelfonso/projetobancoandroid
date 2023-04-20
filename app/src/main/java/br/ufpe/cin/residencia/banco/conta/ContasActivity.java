@@ -36,7 +36,7 @@ public class ContasActivity extends AppCompatActivity {
 
         Button adicionarConta = findViewById(R.id.btn_Adiciona);
         adicionarConta.setOnClickListener(
-                v -> startActivity(new Intent(this, AdicionarContaActivity.class))
+            v -> startActivity(new Intent(this, AdicionarContaActivity.class))
         );
     }
     //TODO Neste arquivo ainda falta implementar o código que atualiza a lista de contas automaticamente na tela
