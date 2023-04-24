@@ -30,7 +30,7 @@ public interface ContaDAO {
     //TODO incluir métodos para buscar pelo (1) número da conta, (2) pelo nome e (3) pelo CPF do Cliente
 
     @Query("SELECT * FROM contas WHERE numero = :numeroConta")
-    Conta buscarPeloNumero(String numeroConta);
+    List<Conta> buscarPeloNumero(String numeroConta);
 
     @Query("SELECT * FROM contas WHERE nomeCliente = :nomeCliente")
     List<Conta> buscarPeloNome(String nomeCliente);

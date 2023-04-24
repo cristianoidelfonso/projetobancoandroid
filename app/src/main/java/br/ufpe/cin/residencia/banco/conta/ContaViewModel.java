@@ -26,20 +26,20 @@ public class ContaViewModel extends AndroidViewModel {
 
     public ContaViewModel(@NonNull Application application) {
         super(application);
-        BancoDB db = Room.databaseBuilder(application, BancoDB.class, DB_NAME).build();
-        ContaDAO dao = db.contaDAO();
-        this.repository = new ContaRepository(dao);
+        this.repository = new ContaRepository(BancoDB.getDB(application).contaDAO());
         this.contas = this.repository.getContas();
+    }
 
-        // this.repository = new ContaRepository(BancoDB.getDB(application).contaDAO());
-        // this.contas = this.repository.getContas();
+    void listar() {
+        new Thread( () -> {
+            List<Conta> contas = this.repository.getContas().getValue();
+            assert contas != null;
+            _contaAtual.postValue(contas.get(0));
+        } );
     }
 
     void inserir(Conta c) {
-        //new Thread(() -> repository.inserir(c)).start();
-        rodarEmBackground(
-                () -> this.repository.inserir(c)
-        );
+        new Thread(() -> repository.inserir(c)).start();
     }
 
     void atualizar(Conta c) {
@@ -53,21 +53,25 @@ public class ContaViewModel extends AndroidViewModel {
     }
 
     void buscarPeloNumero(String numeroConta) {
-        //TODO implementar
         new Thread( () -> {
-            Conta c = this.repository.buscarPeloNumero(numeroConta);
-        }).start();
+            List<Conta> contas = this.repository.buscarPeloNumero(numeroConta);
+            _contaAtual.postValue(contas.get(0));
+        } ).start();
     }
 
-    List<Conta> buscarPeloNome(String nomeCliente) {
-        return this.repository.buscarPeloNome(nomeCliente);
+    void buscarPeloNome(String nomeCliente) {
+        new Thread( () -> {
+            List<Conta> contas = this.repository.buscarPeloNome(nomeCliente);
+            _contaAtual.postValue(contas.get(0));
+        } ).start();
     }
 
-    List<Conta> buscarPeloCpf(String cpfCliente) {
-        return this.repository.buscarPeloCPF(cpfCliente);
+    void buscarPeloCPF(String cpfCliente) {
+        new Thread( () -> {
+            List<Conta> contas = this.repository.buscarPeloCPF(cpfCliente);
+            _contaAtual.postValue(contas.get(0));
+        } ).start();
     }
 
-    private void rodarEmBackground(Runnable r) {
-        new Thread(r).start();
-    }
+
 }

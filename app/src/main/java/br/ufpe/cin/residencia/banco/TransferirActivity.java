@@ -35,6 +35,16 @@ public class TransferirActivity extends AppCompatActivity {
                     String numOrigem = numeroContaOrigem.getText().toString();
                     String numDestino = numeroContaDestino.getText().toString();
                     //TODO lembrar de implementar validação dos números das contas e do valor da operação, antes de efetuar a operação de transferência.
+                    if (numOrigem.isEmpty()) {
+                        numeroContaOrigem.setError("Número da conta de origem não pode ser vazio.");
+                        return;
+                    }
+
+                    if (numDestino.isEmpty()) {
+                        numeroContaDestino.setError("Número da conta de destino não pode ser vazio.");
+                        return;
+                    }
+
                     // O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
                     double valor = Double.valueOf(valorOperacao.getText().toString());
                     viewModel.transferir(numOrigem, numDestino, valor);

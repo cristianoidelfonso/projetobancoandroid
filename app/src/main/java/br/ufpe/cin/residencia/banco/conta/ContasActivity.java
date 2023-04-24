@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -31,13 +32,24 @@ public class ContasActivity extends AppCompatActivity {
         adapter = new ContaAdapter(getLayoutInflater());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         recyclerView.setAdapter(adapter);
 
         Button adicionarConta = findViewById(R.id.btn_Adiciona);
+
+        viewModel.contas.observe(this, contas -> {
+            adapter.submitList(contas);
+        });
+
         adicionarConta.setOnClickListener(
             v -> startActivity(new Intent(this, AdicionarContaActivity.class))
         );
     }
+
     //TODO Neste arquivo ainda falta implementar o código que atualiza a lista de contas automaticamente na tela
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.notifyDataSetChanged();
+    }
 }

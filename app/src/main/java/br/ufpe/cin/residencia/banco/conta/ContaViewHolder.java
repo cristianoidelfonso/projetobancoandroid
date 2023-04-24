@@ -31,7 +31,9 @@ public class ContaViewHolder  extends RecyclerView.ViewHolder {
     void bindTo(Conta c) {
         this.nomeCliente.setText(c.nomeCliente);
         this.infoConta.setText(c.numero + " | " + "Saldo atual: R$" + NumberFormat.getCurrencyInstance().format(c.saldo));
+
         //TODO Falta atualizar a imagem de acordo com o valor do saldo atual
+        this.icone.setImageResource( (c.saldo >= 0) ? R.drawable.ok : R.drawable.delete );
         this.addListener(c.numero);
     }
 
@@ -40,7 +42,9 @@ public class ContaViewHolder  extends RecyclerView.ViewHolder {
                 v -> {
                     Context c = this.itemView.getContext();
                     Intent i = new Intent(c, EditarContaActivity.class);
+
                     //TODO Está especificando a Activity mas não está passando o número da conta pelo Intent
+                    i.putExtra(KEY_NUMERO_CONTA, numeroConta);
                     c.startActivity(i);
                 }
         );

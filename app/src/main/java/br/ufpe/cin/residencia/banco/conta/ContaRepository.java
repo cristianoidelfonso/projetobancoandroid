@@ -19,6 +19,10 @@ public class ContaRepository {
         return contas;
     }
 
+    public List<Conta> ListarContas() {
+        return dao.contas().getValue();
+    }
+
     @WorkerThread
     public void inserir(Conta c) {
         dao.adicionar(c);
@@ -40,20 +44,17 @@ public class ContaRepository {
     public List<Conta> buscarPeloNome(String nomeCliente) {
         //TODO implementar busca
         return dao.buscarPeloNome(nomeCliente);
-        //return null;
     }
 
     @WorkerThread
     public List<Conta> buscarPeloCPF(String cpfCliente) {
         //TODO implementar busca
         return dao.buscarPeloCPF(cpfCliente);
-        //return null;
     }
 
     @WorkerThread
-    public Conta buscarPeloNumero(String numeroConta) {
+    public List<Conta> buscarPeloNumero(String numeroConta) {
         //TODO implementar busca
         return dao.buscarPeloNumero(numeroConta);
-        // return null;
     }
 }
