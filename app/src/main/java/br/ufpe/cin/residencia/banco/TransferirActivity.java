@@ -35,18 +35,41 @@ public class TransferirActivity extends AppCompatActivity {
                     String numOrigem = numeroContaOrigem.getText().toString();
                     String numDestino = numeroContaDestino.getText().toString();
                     //TODO lembrar de implementar validação dos números das contas e do valor da operação, antes de efetuar a operação de transferência.
+
+                    // Validação para que o numero da conta de origem não seja vazio
                     if (numOrigem.isEmpty()) {
                         numeroContaOrigem.setError("Número da conta de origem não pode ser vazio.");
                         return;
                     }
 
+                    // Validação para que o valor da operação não seja menor ou igual a zero
+                    if (Double.parseDouble(valorOperacao.getText().toString()) <= 0) {
+                        valorOperacao.setError("Valor da operação não pode ser menor ou igual a zero");
+                        return;
+                    }
+
+                    // Validação para que o valor da operação não seja vazio
+                    if (valorOperacao.getText().toString().isEmpty()) {
+                        valorOperacao.setError("Valor da operação não pode ser vazio");
+                        return;
+                    }
+
+                    // Validação para que o numero da conta de destino não seja igual ao numero da conta de origem
+                    if (numOrigem.equals(numDestino)) {
+                        numeroContaDestino.setError("Número da conta destino não pode ser igual ao número da conta origem");
+                        return;
+                    }
+
+                    // Validação para que o numero da conta de destino não seja vazio
                     if (numDestino.isEmpty()) {
                         numeroContaDestino.setError("Número da conta de destino não pode ser vazio.");
                         return;
                     }
 
-                    // O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
+                    //TODO O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
+
                     double valor = Double.valueOf(valorOperacao.getText().toString());
+
                     viewModel.transferir(numOrigem, numDestino, valor);
                     finish();
                 }

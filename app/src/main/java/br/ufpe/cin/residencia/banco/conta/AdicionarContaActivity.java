@@ -40,20 +40,27 @@ public class AdicionarContaActivity extends AppCompatActivity {
                     String saldoConta = campoSaldo.getText().toString();
 
                     //TODO: Incluir validações aqui, antes de criar um objeto Conta (por exemplo, verificar que digitou um nome com pelo menos 5 caracteres, que o campo de saldo tem de fato um número, assim por diante). Se todas as validações passarem, aí sim cria a Conta conforme linha abaixo.
-                    if(numeroConta.length() != 6){
-                        campoNumero.setError("Número da conta deve ter 6 caracteres");
+
+                    // Validação para que o número da conta possua exatamente 7 dígitos
+                    if(numeroConta.length() != 7){
+                        campoNumero.setError("O número da conta deve possuir exatamente 7 dígitos");
                         return;
                     }
+
+                    // Validação para que o nome do cliente possua 5 ou mais caracteres
                     if(nomeCliente.length() < 5){
-                        campoNome.setError("Nome deve ter pelo menos 5 caracteres");
+                        campoNome.setError("O nome deve ter pelo menos 5 caracteres");
                         return;
                     }
 
+                    // Validação para que o cpf do cliente possua exatamente 11 dígitos
                     if(cpfCliente.length() != 11){
-                        campoCPF.setError("CPF deve ter 11 caracteres");
+                        campoCPF.setError("O CPF deve ter 11 dígitos");
                         return;
                     }
 
+                    // Validação para que uma conta não seja criada sem um saldo informado.
+                    // A conta pode ser criada com saldo informado igual a zero (0).
                     if(saldoConta.length() == 0){
                         campoSaldo.setError("Saldo não pode ser vazio");
                         return;

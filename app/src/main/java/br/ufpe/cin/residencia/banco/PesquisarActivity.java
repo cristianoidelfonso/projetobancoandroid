@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -41,32 +42,49 @@ public class PesquisarActivity extends AppCompatActivity {
         Button btnPesquisar = findViewById(R.id.btn_Pesquisar);
         RadioGroup tipoPesquisa = findViewById(R.id.tipoPesquisa);
 
-        // viewModel.contas.observe(this, contas -> { adapter.submitList(contas); });
-
         btnPesquisar.setOnClickListener(
                 v -> {
                     String oQueFoiDigitado = aPesquisar.getText().toString();
 
                     //TODO implementar a busca de acordo com o tipo de busca escolhido pelo usuário
-                    if (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloNomeCliente) {
-                        viewModel.buscarPeloNome(oQueFoiDigitado);
-                        Log.i("PesquisarActivity", "Pesquisar pelo nome do cliente: " + oQueFoiDigitado + " | Contas: " + viewModel.contas );
-                    } else if (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloCPFcliente) {
-                        viewModel.buscarPeloCPF(oQueFoiDigitado);
-                        Log.i("PesquisarActivity", "Pesquisar pelo cpf do cliente: " + oQueFoiDigitado );
-                    } else if (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloNumeroConta){
-                        viewModel.buscarPeloNumero(oQueFoiDigitado);
-                        Log.i("PesquisarActivity", "Pesquisar pelo numero da conta: " + oQueFoiDigitado + " | ");
-                    } else {
-                        Log.e("PesquisarActivity", "Nenhum tipo de pesquisa foi selecionado.");
-                    }
 
-                    viewModel.contas.observe(this, contas -> { adapter.submitList(contas); });
+                    if(!oQueFoiDigitado.isEmpty()){
+                        switch (tipoPesquisa.getCheckedRadioButtonId()) {
+                            //TODO implementar a busca por nome
+                            case R.id.peloNomeCliente:
+                                viewModel.buscarPeloNome(oQueFoiDigitado.trim());
+                                aPesquisar.setText("");
+                                break;
+
+                            //TODO implementar a busca por CPF
+                            case R.id.peloCPFcliente:
+                                viewModel.buscarPeloCPF(oQueFoiDigitado.trim());
+                                aPesquisar.setText("");
+                                break;
+
+                            //TODO implementar a busca por número
+                            case R.id.peloNumeroConta:
+                                viewModel.buscarPeloNumero(oQueFoiDigitado.trim());
+                                aPesquisar.setText("");
+                                break;
+                        }
+                    } else {
+                        String info = (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloNomeCliente) ? "Nome do cliente"
+                                    : (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloCPFcliente) ? "CPF do cliente"
+                                    : (tipoPesquisa.getCheckedRadioButtonId() == R.id.peloNumeroConta) ? "Número da conta" : "";
+                        Toast.makeText(this, "Por favor, informe o " + info + ".", Toast.LENGTH_SHORT).show();
+                    }
                 }
         );
 
         //TODO atualizar o RecyclerView com resultados da busca na medida que encontrar
-        //
+        viewModel.listaContasAtual.observe(this, contas -> {
+            if (contas.isEmpty()) {
+                Toast.makeText(this, "Nenhum resultado foi encontrado.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            adapter.submitList(contas);
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")

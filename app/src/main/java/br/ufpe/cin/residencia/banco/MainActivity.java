@@ -54,4 +54,15 @@ public class MainActivity extends AppCompatActivity {
         );
     }
     //TODO Neste arquivo ainda falta a atualização automática do valor total de dinheiro armazenado no banco
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        TextView totalBanco = findViewById(R.id.totalDinheiroBanco);
+
+        viewModel.contas.observe(this, listaContas -> {
+            double saldoBanco = viewModel.saldoTotalBanco();
+            totalBanco.setText("R"+NumberFormat.getCurrencyInstance().format(saldoBanco));
+        });
+    }
 }

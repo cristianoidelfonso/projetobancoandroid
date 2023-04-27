@@ -34,17 +34,22 @@ public class CreditarActivity extends AppCompatActivity {
                 v -> {
                     String numOrigem = numeroContaOrigem.getText().toString();
                     //TODO lembrar de implementar validação do número da conta e do valor da operação, antes de efetuar a operação de crédito.
+
+                    // Validação para que o numero da conta de origem não seja vazio
                     if (numOrigem.isEmpty()) {
                         numeroContaOrigem.setError("Número da conta não pode ser vazio");
                         return;
                     }
 
+                    // Validação para que o valor a ser creditado não seja vazio
                     if (valorOperacao.getText().toString().isEmpty()) {
                         valorOperacao.setError("Valor da operação não pode ser vazio");
                         return;
                     }
-                    // O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
+
+                    //TODO O método abaixo está sendo chamado, mas precisa ser implementado na classe BancoViewModel para funcionar.
                     double valor = Double.valueOf(valorOperacao.getText().toString());
+
                     viewModel.creditar(numOrigem,valor);
                     finish();
                 }

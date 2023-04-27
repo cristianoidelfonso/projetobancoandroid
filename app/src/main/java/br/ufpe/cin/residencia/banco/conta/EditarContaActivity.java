@@ -53,18 +53,22 @@ public class EditarContaActivity extends AppCompatActivity {
                     String saldoConta = campoSaldo.getText().toString();
 
                     //TODO: Incluir validações aqui, antes de criar um objeto Conta. Se todas as validações passarem, aí sim monta um objeto Conta.
+
+                    // Validação para que o campo nome não seja vazio
                     if (nomeCliente.isEmpty()) {
                         campoNome.setError("Campo obrigatório");
                         campoNome.requestFocus();
                         return;
                     }
 
+                    // Validação para que o campo cpf não seja vazio
                     if (cpfCliente.isEmpty()) {
                         campoCPF.setError("Campo obrigatório");
                         campoCPF.requestFocus();
                         return;
                     }
 
+                    // Validação para que o campo saldo não seja vazio
                     if (saldoConta.isEmpty()) {
                         campoSaldo.setError("Campo obrigatório");
                         campoSaldo.requestFocus();
@@ -73,6 +77,7 @@ public class EditarContaActivity extends AppCompatActivity {
 
                     //TODO: chamar o método que vai atualizar a conta no Banco de Dados
                     Conta contaAtualizada = new Conta(numeroConta, Double.parseDouble(saldoConta), nomeCliente, cpfCliente);
+
                     viewModel.atualizar(contaAtualizada);
                     finish();
                 }

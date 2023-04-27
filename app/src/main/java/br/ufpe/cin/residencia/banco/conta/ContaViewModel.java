@@ -30,6 +30,10 @@ public class ContaViewModel extends AndroidViewModel {
         this.contas = this.repository.getContas();
     }
 
+
+    /**
+     * Método utilizado para listar contas do banco de dados, através do repository
+     */
     void listar() {
         new Thread( () -> {
             List<Conta> contas = this.repository.getContas().getValue();
@@ -38,20 +42,36 @@ public class ContaViewModel extends AndroidViewModel {
         } );
     }
 
+    /**
+     * Método utilizado para salvar uma conta no banco de dados, através do repository
+     * @param c
+     */
     void inserir(Conta c) {
         new Thread(() -> repository.inserir(c)).start();
     }
 
+    /**
+     * Método utilizado para atualizar uma conta no banco de dados, através do repository
+     * @param c
+     */
     void atualizar(Conta c) {
         //TODO implementar
         new Thread(() -> this.repository.atualizar(c)).start();
     }
 
+    /**
+     * Método utilizado para remover uma conta no banco de dados, através do repository
+     * @param c
+     */
     void remover(Conta c) {
         //TODO implementar
         new Thread(() -> this.repository.remover(c)).start();
     }
 
+    /**
+     * Método utilizado para buscar uma conta no banco de dados, através do repository
+     * @param numeroConta
+     */
     void buscarPeloNumero(String numeroConta) {
         new Thread( () -> {
             List<Conta> contas = this.repository.buscarPeloNumero(numeroConta);
@@ -59,6 +79,10 @@ public class ContaViewModel extends AndroidViewModel {
         } ).start();
     }
 
+    /**
+     * Método utilizado para listar as contas de um cliente através do repository, com base no nome informado
+     * @param nomeCliente
+     */
     void buscarPeloNome(String nomeCliente) {
         new Thread( () -> {
             List<Conta> contas = this.repository.buscarPeloNome(nomeCliente);
@@ -66,6 +90,10 @@ public class ContaViewModel extends AndroidViewModel {
         } ).start();
     }
 
+    /**
+     * Método utilizado para listar as contas de um cliente através do repository, com base no cpf informado,
+     * @param cpfCliente
+     */
     void buscarPeloCPF(String cpfCliente) {
         new Thread( () -> {
             List<Conta> contas = this.repository.buscarPeloCPF(cpfCliente);
