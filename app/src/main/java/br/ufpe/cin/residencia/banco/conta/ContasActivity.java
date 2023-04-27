@@ -36,10 +36,12 @@ public class ContasActivity extends AppCompatActivity {
 
         Button adicionarConta = findViewById(R.id.btn_Adiciona);
 
+        // Chamada para listar as contas cadastradas no banco de dados
         viewModel.contas.observe(this, contas -> {
             adapter.submitList(contas);
         });
 
+        // Chamada para adicionar uma nova conta no banco de dados
         adicionarConta.setOnClickListener(
             v -> startActivity(new Intent(this, AdicionarContaActivity.class))
         );

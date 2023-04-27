@@ -42,6 +42,7 @@ public class PesquisarActivity extends AppCompatActivity {
         Button btnPesquisar = findViewById(R.id.btn_Pesquisar);
         RadioGroup tipoPesquisa = findViewById(R.id.tipoPesquisa);
 
+
         btnPesquisar.setOnClickListener(
                 v -> {
                     String oQueFoiDigitado = aPesquisar.getText().toString();
@@ -81,7 +82,6 @@ public class PesquisarActivity extends AppCompatActivity {
         viewModel.listaContasAtual.observe(this, contas -> {
             if (contas.isEmpty()) {
                 Toast.makeText(this, "Nenhum resultado foi encontrado.", Toast.LENGTH_SHORT).show();
-                return;
             }
             adapter.submitList(contas);
         });
